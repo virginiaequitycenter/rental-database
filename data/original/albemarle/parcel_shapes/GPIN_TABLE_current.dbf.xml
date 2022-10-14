@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE metadata SYSTEM "http://www.fgdc.gov/metadata/fgdc-std-001-1998.dtd">
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>County of Albemarle/Department of Planning and Community Development, Office of Geographic Data Services (GDS)</origin>
+				<pubdate>4/14/2004</pubdate>
+				<title>GPIN_TABLE</title>
+				<edition>As of 12/31/2004</edition>
+				<geoform Sync="TRUE">tabular digital data</geoform>
+				<onlink Sync="TRUE">\\COB_Planning\Mapping\OOMGAIR\Parcels\GPIN_TABLE_current.dbf</onlink>
+				<ftname Sync="TRUE">GPIN_TABLE_current</ftname></citeinfo>
+		</citation>
+		<descript>
+			<abstract>GPIN_Table table containing unique GPIN values for every parcel ID (PIN).  This file is continually updated on a daily basis by County staff from the Real Estate Division of the Finance Department.  Information contained in this table includes the GPIN value of parcels, the parcel PINs, and the DEED_ACREAGE information for those parcels.
+
+
+
+
+
+
+
+Please note that from January to June of any given year, the CAMA information that Real Estate maintains may not reflect the information contained in the GPIN_TABLE and the Parcels layer.
+
+
+
+
+
+
+
+Any errors or omissions should be reported to the Real Estate Division for correction.</abstract>
+			<purpose>It is possible for a one to many relationship to exist between parcel polygons and parcel IDs.  A GPIN_Table table should be used to identify parcels for which multiple parcel IDs exist (e.g. leaseholds, mineral rights, condos, etc.).  To access the information in the GPIN_Table table, the GPIN field in the parcel layer can be used to link to the GPIN field in the GPIN_Table table.  The PIN field located in the parcel shapefile may only reflect the first parcel ID for a particular parcel.  Use the GPIN_Table table to determine if more PINs exist for any given parcel polygon.</purpose>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>~week old</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>ground condition</current>
+		</timeperd>
+		<status>
+			<progress>Complete</progress>
+			<update>Annually</update>
+		</status>
+		<keywords>
+			<theme>
+				<themekt>Parcels</themekt>
+				<themekey>Parcels</themekey>
+				<themekey>Cadastral</themekey>
+				<themekey>GPIN</themekey>
+			</theme>
+			<theme>
+				<themekt>Cadastral</themekt>
+			</theme>
+			<theme>
+				<themekt>Geographic Parcel Identification Number</themekt>
+				<themekey>GPIN</themekey>
+			</theme>
+			<place>
+				<placekey>Albemarle County</placekey>
+				<placekey>County of Albemarle</placekey>
+			</place>
+			<temporal>
+			</temporal>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>No warranty, expressed or implied, is made by GDS as to the accuracy of the data.</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntper>Damon Pettitt</cntper>
+					<cntorg>County of Albemarle/Department of Planning and Community Development, Office of Geographic Data Services (GDS)</cntorg>
+				</cntperp>
+				<cntpos>GIS Coordinator</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>401 McIntire Rd</address>
+					<address>Room 218</address>
+					<city>Charlottesville</city>
+					<state>VA</state>
+					<postal>22902</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>434-296-5823 x3231</cntvoice>
+				<cntfax>434-296-4012</cntfax>
+				<cntemail>dpettitt@albemarle.org</cntemail>
+			</cntinfo>
+		</ptcontac>
+		<native Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.3000</native>
+		<natvform Sync="TRUE">dBASE Table</natvform></idinfo>
+	<dataqual>
+	</dataqual>
+	<spdoinfo>
+		<indspref>DBF table</indspref>
+		<ptvctinf>
+		</ptvctinf>
+	</spdoinfo>
+	<eainfo>
+		<detailed Name="GPIN_TABLE_current">
+			<attr><attrlabl Sync="TRUE">DEED_ACRE</attrlabl><attalias Sync="TRUE">DEED_ACRE</attalias><attrtype Sync="TRUE">Number</attrtype><attwidth Sync="TRUE">11</attwidth><attrdef>Deed acreage of a parcel</attrdef></attr><enttyp>
+				<enttypl Sync="TRUE">GPIN_TABLE_current</enttypl>
+				<enttypt Sync="TRUE">Table</enttypt><enttypc Sync="TRUE">43647</enttypc></enttyp>
+			<attr>
+				<attrlabl Sync="TRUE">PIN</attrlabl>
+				<attrdef>14 digit parcel identification number</attrdef>
+				<attrdefs>GDS</attrdefs>
+				<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">PIN</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">14</attwidth></attr>
+			<attr><attrlabl Sync="TRUE">GPIN</attrlabl><attalias Sync="TRUE">GPIN</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">12</attwidth><attrdef>12 digit unique identifier for a parcel polygon</attrdef><attrdefs>GDS</attrdefs></attr><attr><attrlabl Sync="TRUE">OID</attrlabl><attalias Sync="TRUE">OID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><attrdef Sync="TRUE">Internal feature number.</attrdef><attrdefs Sync="TRUE">ESRI</attrdefs><attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">UPDATED</attrlabl><attalias Sync="TRUE">UPDATED</attalias><attrtype Sync="TRUE">Date</attrtype><attwidth Sync="TRUE">8</attwidth></attr><attr><attrlabl Sync="TRUE">UPDATED_BY</attrlabl><attalias Sync="TRUE">UPDATED_BY</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">10</attwidth><attrdef>County staff person who did the parcel boundary updating.  If a '+' appears after the person's name it means that an automated process (e.g. topology validation) has updated this record, but because we want to preserve the name of the staff person that did the actual updating, as opposed to the name of the automatic user (e.g. ALBEMARLE), a '+' will appear.</attrdef></attr><attr><attrlabl Sync="TRUE">CREATED</attrlabl><attalias Sync="TRUE">CREATED</attalias><attrtype Sync="TRUE">Date</attrtype><attwidth Sync="TRUE">8</attwidth></attr></detailed>
+		<detailed Name="albemarle.ALBEMARLE.PARCELS2GPIN_TABLE">
+			<enttyp>
+				<enttypl Sync="TRUE">albemarle.ALBEMARLE.PARCELS2GPIN_TABLE</enttypl>
+				<enttypt Sync="TRUE">Relationship</enttypt></enttyp>
+			<attr><atnumdec/></attr><attr/></detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>County of Albemarle/Department of Planning and Community Development, Office of Geographic Data Services (GDS)</cntorg>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>401 McIntire Rd</address>
+					<address>Room 218</address>
+					<city>Charlottesville</city>
+					<state>VA</state>
+					<postal>22902</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>434-296-5823</cntvoice>
+				<cntfax>434-296-4012</cntfax>
+			</cntinfo>
+		</distrib>
+		<resdesc>Downloadable Data</resdesc>
+		<distliab>This data shall not be digitally redistributed, in any way, unless given permission by Albemarle County to do so.</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<transize>17.267</transize>
+					<dssize Sync="TRUE">2.664</dssize></digtinfo>
+			</digform>
+			<fees>$25.00</fees>
+			<ordering>Please submit something in writing (e-mail is o.k.) stating what the data will be used for, and agreeing not redistribute the data.</ordering>
+			<turnarnd>10 business days</turnarnd>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd Sync="TRUE">20091117</metd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>County of Albemarle/Department of Planning and Community Development, Office of Geographic Data Services (GDS)</cntorg>
+					<cntper>Damon Pettitt</cntper>
+				</cntorgp>
+				<cntpos>GIS Coordinator</cntpos>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>401 McIntire Rd</address>
+					<address>Room 218</address>
+					<city>Charlottesville</city>
+					<state>VA</state>
+					<postal>22902</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>434-296-5823</cntvoice>
+				<cntfax>434-296-4012</cntfax>
+				<cntemail>dpettitt@albemarle.org</cntemail>
+			</cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<mettc Sync="TRUE">local time</mettc>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<langmeta Sync="TRUE">en</langmeta><metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.3000</envirDesc><dataLang><languageCode Sync="TRUE" value="en"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">GPIN_TABLE_current</resTitle><presForm><PresFormCd Sync="TRUE" value="011"></PresFormCd></presForm></idCitation></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">file://\\COB_Planning\Mapping\OOMGAIR\Parcels\GPIN_TABLE_current.dbf</linkage><protocol Sync="TRUE">Local Area Network</protocol></onLineSrc><transSize Sync="TRUE">2.664</transSize></distorTran><distorFormat><formatName Sync="TRUE">dBASE Table</formatName></distorFormat></distributor></distInfo><Esri><SyncDate>20091117</SyncDate><SyncTime>12291800</SyncTime><ModDate>20091117</ModDate><ModTime>12292800</ModTime><CreaDate>20050323</CreaDate><CreaTime>11492400</CreaTime><SyncOnce>FALSE</SyncOnce><MetaID>{B4689B0C-013A-4020-9E65-946201DFDF86}</MetaID><DataProperties><lineage/></DataProperties></Esri><mdDateSt Sync="TRUE">20091117</mdDateSt></metadata>
