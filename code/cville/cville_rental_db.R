@@ -73,3 +73,19 @@ residential_parcels$parcel_zip_code_5 <- stri_extract_last_regex(
   residential_parcels_lonlat$formatted_address, "\\d{5}+")
 # wrongly geocoded
 residential_parcels$parcel_zip_code_5[residential_parcels$parcel_zip_code_5 == "46117"] <- "22902"
+
+# format owners zip to 5 digits
+residential_parcels$OwnerZipCode_5 <- gsub(residential_parcels$OwnerZipCode, 
+                                 pattern="-[0-9]{0,9}", replacement = "")
+residential_parcels$OwnerZipCode_5 <- substr(residential_parcels$OwnerZipCode_5, 1,5)
+
+# owners that live in a different zip
+owners_difzip <- residential_parcels %>% subset(OwnerZipCode != parcel_zip_code_5)
+# exclude if the owners zip is NA
+owners_difzip <- owners_difzip[!is.na(owners_difzip$OwnerZipCode),]
+
+#-----------------------------------------------------------------------------------------------
+# for the owners living in the same zip code
+# 1. standardize owners address
+# 2. compare parcl and owner's address using fuzzy match
+#-----------------------------------------------------------------------------------------------
