@@ -1,4 +1,4 @@
-#Cville Rental Database approximation
+# Cville Rental Database approximation
 
 # packages
 library(readxl)
@@ -7,6 +7,10 @@ library(tidyverse)
 library(tidygeocoder)
 library(stringi) 
 library(fedmatch)
+library(sf)
+library(leaflet)
+library(htmlwidgets)
+library(webshot)
 
 # working directory
 setwd("~/git/rental-database")
@@ -23,7 +27,8 @@ parcel_details <- parcel_details[-(is.na(parcel_details$OwnerAddress) & parcel_d
 residential <- read_csv("data/original/cville/Real_Estate_(Residential_Details).csv")
 
 # merge
-residential_parcels <- merge(parcel_details, residential, by.x = "ParcelNumber", by.y = "ParcelNumber", 
+residential_parcels <- merge(parcel_details, residential, by.x = "ParcelNumber", 
+                             by.y = "ParcelNumber", 
                              no.dups = FALSE, all = T) 
 
 # restrict residential properties to only livable places
@@ -94,7 +99,7 @@ owners_difzip <- owners_difzip[!is.na(owners_difzip$OwnerZipCode),]
 #-----------------------------------------------------------------------------------------------
 # for the owners living in the same zip code
 # 1. standardize owners address
-# 2. compare parcl and owner's address using fuzzy match
+# 2. compare parcel and owner's address using fuzzy match
 #-----------------------------------------------------------------------------------------------
 
 # drop observations with owners not living in the same zip
@@ -115,6 +120,14 @@ owners_addresses <- residential_parcels %>%
           lat = latitude ,
           long = longitude,
           full_results = T)
+
+
+#readr::write_csv(owners_addresses, xzfile(paste0(savepath,"full_owner_adr_same_zip.csv.xz"), compression = 9))
+
+# upload the geocoded data
+owners_addresses <- readr::read_csv(paste0(savepath,"full_owner_adr_same_zip.csv.xz"))
+
+
 owners_addresses_cols <- owners_addresses %>% select(c("ID", owner_lat = "latitude", 
                                                        owner_log = "longitude", 
                                                        owner_format_address = "formatted_address")) 
@@ -140,3 +153,73 @@ non_matched_own_adr <- left_join(non_matched_own_adr, parcel_addresses_cols, by=
 #-----------------------------------------------------------------------------------------------
 # identify non-person owners
 #-----------------------------------------------------------------------------------------------
+
+# get all the owners who do not live at the property addresses
+df2 <- residential_parcels[residential_parcels$ID %in% non_matched_own_adr$ID,]
+df2 <- df2 %>% select(-owner_full_address)
+own_not_live <- rbind(owners_difzip, df2)
+
+# save the dataset of owners not living at the properties they own
+#readr::write_csv(own_not_live, xzfile(paste0(savepath,"own_not_live.csv.xz"), compression = 9))
+
+# upload the rental db
+own_not_live <- readr::read_csv(paste0(savepath,"own_not_live.csv.xz"))
+
+# load regex to identify non-person owners
+source('code/cville/non_res_pla_pattern.R')
+# Comment: mislabels owners couples as a non-person owner
+# Exclude owners which has "&" in their name
+# Include "trust", "trustee" and "trustees" as a non-person owners
+matched <- grepl(x = own_not_live$OwnerName, pattern = non_res_pla_pattern)
+own_not_live["non-person_owner"] <- as.numeric(matched)
+
+#df <- own_not_live[,c("OwnerName", "non-person_owner")]
+#df1 <- df[df$`non-person_owner` == 1,]
+
+#-----------------------------------------------------------------------------------------------
+# Map 
+#-----------------------------------------------------------------------------------------------
+
+# read in shape files
+parcel_shapes <- st_read("data/original/cville/parcel_shapes/Parcel_Area_Details.shp")
+
+# merge to owners who don't live in the properties they own
+own_not_live <- left_join(own_not_live, parcel_shapes[,c("ParcelNumb", "geometry")], 
+                          by=c("ParcelNumber"="ParcelNumb"))
+
+# initilize the map
+map_parcels <- leaflet(parcel_shapes, options = leafletOptions(attributionControl = FALSE)) %>%
+  setView(-78.47, 38.03, 13) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addScaleBar("bottomleft") %>%
+  addMapPane("lines", zIndex = 410) %>%
+  addMapPane("points", zIndex = 411) %>%
+  addPolygons(data = parcel_shapes$geometry,
+              fillColor = "grey",
+              fillOpacity = 0.5, stroke = FALSE, group = "Parcels"
+  ) 
+#%>% hideGroup("Parcels")
+
+# add the layer of access scores to the map
+pal <- colorFactor(c("#009E73", "#CC79A7"), own_not_live$`non-person_owner`)
+map <- map_parcels %>%
+  addControl("Non-person owners (Owners do not live in the properties they own)", "topright") %>%
+  addLegend("bottomright", pal, own_not_live$`non-person_owner`, 
+            title = "Ownership Type", opacity = .7,
+            labFormat = function(type, cuts, p) {  # Here's the trick
+              paste0(c("Person", "Non-person"))
+            }) %>%
+  addPolygons(data=own_not_live$geometry,
+              fillColor = pal(own_not_live$`non-person_owner`), fillOpacity = .7, weight = 1, 
+              color = "#000",
+              #highlightOptions = highlightOptions(color = "#fff"), group = "Nonperson",
+              label = paste0(
+                "Parcel ID: ", own_not_live$ParcelNumber, ", Owner: ", own_not_live$OwnerName,
+                ", Address: ", own_not_live$full_address))
+
+# save as a html page
+saveWidget(map, file="data/working/cville/cville_rental_property_map.html")
+# saving a map as an image 
+webshot("data/working/cville/cville_rental_property_map.html", file = "data/working/cville/cville_rental_property_map.png",
+       cliprect = "viewport")
+
