@@ -8,7 +8,7 @@ library(tidygeocoder)
 library(stringi) 
 
 # working directory
-setwd("~/git/rental-database")
+# setwd("~/git/rental-database")
 
 # cville
 parcel_details <- read_csv("data/original/cville/Parcel_Area_Details.csv")

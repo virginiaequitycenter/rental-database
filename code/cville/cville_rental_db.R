@@ -13,12 +13,12 @@ library(htmlwidgets)
 library(webshot)
 
 # working directory
-setwd("~/git/rental-database")
+# setwd("~/git/rental-database")
 
 # cville
 parcel_details <- read_csv("data/original/cville/Parcel_Area_Details.csv")
 # non-unique parcel IDs: 490168000, 230035000, 550073110 
-# same entrym, but for address
+# same entry, but for address
 # drop the ones with NA address
 parcel_details <- parcel_details %>% filter(!(OBJECTID %in% c("104086")))
 parcel_details <- parcel_details[-(is.na(parcel_details$OwnerAddress) & parcel_details$ParcelNumber == "230035000"),]
@@ -176,6 +176,11 @@ own_not_live["non-person_owner"] <- as.numeric(matched)
 #df <- own_not_live[,c("OwnerName", "non-person_owner")]
 #df1 <- df[df$`non-person_owner` == 1,]
 
+# save the dataset of owners not living at the properties they own with non-person flag
+#readr::write_csv(own_not_live, xzfile(paste0(savepath,"own_not_live_entity.csv.xz"), compression = 9))
+#own_not_live_entity <- readr::read_csv(paste0(savepath,"own_not_live_entity.csv.xz"))
+
+
 #-----------------------------------------------------------------------------------------------
 # Map 
 #-----------------------------------------------------------------------------------------------
@@ -187,7 +192,7 @@ parcel_shapes <- st_read("data/original/cville/parcel_shapes/Parcel_Area_Details
 own_not_live <- left_join(own_not_live, parcel_shapes[,c("ParcelNumb", "geometry")], 
                           by=c("ParcelNumber"="ParcelNumb"))
 
-# initilize the map
+# initialize the map
 map_parcels <- leaflet(parcel_shapes, options = leafletOptions(attributionControl = FALSE)) %>%
   setView(-78.47, 38.03, 13) %>%
   addProviderTiles("CartoDB.Positron") %>%
